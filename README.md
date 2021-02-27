@@ -35,9 +35,8 @@
 
 ### Association
 
-- belongs_to :users
-- has_one :orders
-- has_one :addresses
+- belongs_to :user
+- has_one :order
 
 ## Orders テーブル
 
@@ -49,8 +48,10 @@
 
 ### Association
 
-- belongs_to :products
-- belongs_to :users
+- belongs_to :product
+- belongs_to :user
+- belongs_to :address
+
 
 
 ## Addresses テーブル
@@ -61,10 +62,10 @@
 |  delivery_prefectures_id  |  integer     |  null: false               |
 |  city                     |  string      |  null: false               |
 |  address1                 |  string      |  null: false               |
-|  address2                 |  string      |  null: false               |
+|  address2                 |  string      |                            |
 |  phone_number             |  string      |  null: false               |
 |  product                  |  references  |  null: false, foreign_key  |
 
 ### Association
 
-- has_one :products
+- belongs_to :order
