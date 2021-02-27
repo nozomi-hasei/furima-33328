@@ -50,7 +50,7 @@
 
 - belongs_to :product
 - belongs_to :user
-- belongs_to :address
+- has_one :address
 
 
 
@@ -64,7 +64,7 @@
 |  address1                 |  string      |  null: false               |
 |  address2                 |  string      |                            |
 |  phone_number             |  string      |  null: false               |
-|  product                  |  references  |  null: false, foreign_key  |
+|  order                    |  references  |  null: false, foreign_key  |
 
 ### Association
 
