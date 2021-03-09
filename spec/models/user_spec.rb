@@ -32,10 +32,10 @@ describe User, type: :model do
       end
       it "重複したemailが存在する場合登録が出来ない" do
         @user.save
-        d_user = FactoryBot.build(:user)
-        d_user.email = @user.email
-        d_user.valid?
-        expect(d_user.errors.full_messages).to include("Email has already been taken")
+        another_user = FactoryBot.build(:user)
+        another_user.email = @user.email
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
       #<=============================>
       it "passwordが空だと登録出来ない" do
@@ -54,7 +54,22 @@ describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
-      #<=============================>
+      it "passwordが半角数字のみの場合は登録出来ない" do
+        @user.password = "111111"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be registered")
+      end
+      it "passwordが半角英字のみの場合は登録出来ない" do
+        @user.password = "nozominozo"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be registered")
+      end
+      it "passwordが全角の場合は登録出来ない" do
+        @user.password = "１２３４５６"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be registered")
+      end
+        #<=============================>
       it "first_nameが空だと登録出来ない" do
         @user.first_name = ""
         @user.valid?

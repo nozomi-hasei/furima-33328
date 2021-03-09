@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   with_options presence: true do
     validates :nickname 
-    with_options format: {with: /\A[ぁ-んァ-ン一-龥]/} do
+    with_options format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/} do
       validates :last_name
       validates :first_name
     end 
@@ -14,7 +14,9 @@ class User < ApplicationRecord
       validates :first_name_kana
     end 
     validates :birthday
+    validates :password, format: {with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: "can't be registered"}
   end
+
 
   has_many :products
   has_many :orders
