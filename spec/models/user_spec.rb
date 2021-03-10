@@ -90,17 +90,25 @@ describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name kana can't be blank", "Last name kana is invalid")
       end
-      it "last_nameとfirst_nameが半角文字だと登録できない" do
+      it "last_nameが半角文字だと登録できない" do
         @user.last_name = "hasegawa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name is invalid")
+      end
+      it "first_nameが半角文字だと登録できない" do
         @user.first_name = "tukasa"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name is invalid", "First name is invalid")
+        expect(@user.errors.full_messages).to include("First name is invalid")
       end
-      it "last_name_kanaとfirst_name_kanaがカタカナでなければ登録出来ない" do
+      it "last_name_kanaがカタカナでなければ登録出来ない" do
         @user.last_name_kana = "hasegawa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name kana is invalid")
+      end
+      it "first_name_kanaがカタカナでなければ登録出来ない" do
         @user.first_name_kana = "tukasa"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana is invalid", "First name kana is invalid")
+        expect(@user.errors.full_messages).to include("First name kana is invalid")
       end
       #<=============================>  
       it "birthdayが空だと登録出来ない" do
