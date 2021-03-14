@@ -18,7 +18,7 @@ class Product < ApplicationRecord
     end
   
     with_options numericality: { other_than: 1 } do
-      validates :category_id, :condition_id, :delivery_cost_id, :delivery_prefecture_id, :delivery_day
+      validates :category_id, :condition_id, :delivery_cost_id, :delivery_prefecture_id, :delivery_day_id
     end
   end
 end
