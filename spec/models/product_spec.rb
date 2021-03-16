@@ -54,6 +54,35 @@ describe Product, type: :model do
         @product.valid?
         expect(@product.errors.full_messages).to include("Price can't be blank")
       end
+      it 'priceが300以下だと登録出来ない' do
+        @product.price = '100'
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end 
+      it 'priceが9999999より大きいと登録出来ない' do
+        @product.price = '10000000'
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+      it 'priceは半角数字以外は登録出来ない' do
+        @product.price = '１２３４５'
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Price is not a number")
+      end
+      it 'imageが空では登録出来ない' do
+        @product.image = nil
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Image can't be blank")
+      end
+      it 'idが1を選択された場合登録出来ない' do
+        @product.category_id = '1'
+        @product.condition_id = '1'
+        @product.delivery_cost_id = '1'
+        @product.delivery_prefecture_id = '1'
+        @product.delivery_day_id = '1'
+        @product.valid?
+        expect(@product.errors.full_messages).to include("Category must be other than 1", "Condition must be other than 1", "Delivery cost must be other than 1", "Delivery prefecture must be other than 1", "Delivery day must be other than 1")
+      end
     end
   end
 end
