@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   
   def index
     @products = Product.order("created_at DESC")
@@ -20,7 +20,10 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = product.show(product_params)
+    @product = Product.find(params[:id])
+  end
+
+  def destroy
   end
 
   private
