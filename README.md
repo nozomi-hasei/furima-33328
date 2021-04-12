@@ -1,6 +1,6 @@
 # テーブル設計
 
-## Users テーブル
+## users テーブル
 
 |  Column              |  Type     |  Options                    |
 |  ------------------  |  -------  |  -------------------------  |
@@ -13,13 +13,13 @@
 |  last_name_kana      |  string   |  null: false                |
 |  birthday            |  date     |  null: false                |
 
-### Association
+### association
 
 - has_many :products
 - has_many :orders
 
 
-## Products テーブル
+## products テーブル
 
 |  Column                   |  Type        |  Options                         |
 |  -----------------------  |  ----------  |  ------------------------------  |
@@ -33,12 +33,12 @@
 |  price                    |  integer     |  null: false                     |
 |  user                     |  references  |  null: false, foreign_key: true  |
 
-### Association
+### association
 
 - belongs_to :user
 - has_one :order
 
-## Orders テーブル
+## orders テーブル
 
 |  Column   |  Type        |  Options                         |
 |  -------- |  ----------  |  ------------------------------  |
@@ -46,7 +46,7 @@
 |  product  |  references  |  null: false, foreign_key: true  |
 
 
-### Association
+### association
 
 - belongs_to :product
 - belongs_to :user
