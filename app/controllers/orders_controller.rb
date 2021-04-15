@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
   def create
     @product_order = ProductOrder.new(order_params)
     if @product_order.valid?
+      pay_product
       @product_order.save
       return redirect_to root_path
     else
@@ -18,10 +19,19 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    params.require(:product_order).permit(:postal_code, :delivery_prefecture_id, :city, :address1, :address2, :phone_number).merge( product_id: params[:product_id], user_id: current_user.id)
+    params.require(:product_order).permit(:postal_code, :delivery_prefecture_id, :city, :address1, :address2, :phone_number).merge(token: params[:token], product_id: params[:product_id], user_id: current_user.id)
   end
 
   def find_params
     @product = Product.find(params[:product_id])
+  end
+
+  def pay_product
+    Payjp.api_key = "sk_test_87d28e4419ddb33fa465793a"
+      Payjp::Charge.create(
+        amount: @product.price,
+        card: order_params[:token],
+        currency: 'jpy'
+    )
   end
 end
