@@ -13,8 +13,8 @@ class ProductOrder
   end
 
   def save
-    Order.create(user_id: user_id, product_id: product_id)
-    Address.create(postal_code: postal_code, delivery_prefecture_id: delivery_prefecture_id, city: city, address1: address1, address2: address2, phone_number: phone_number)
+    order = Order.create(user_id: user_id, product_id: product_id)
+    Address.create(postal_code: postal_code, delivery_prefecture_id: delivery_prefecture_id, city: city, address1: address1, address2: address2, phone_number: phone_number, order_id: order.id)
   end
 end
 
