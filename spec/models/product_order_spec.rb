@@ -11,6 +11,11 @@ RSpec.describe ProductOrder, type: :model do
       it '全ての項目が正しく入力されていれば購入出来る' do
         expect(@product_order).to be_valid
       end
+
+      it 'address2が抜けていても登録出来ること' do
+        @product_order.address2 = ''
+        expect(@product_order).to be_valid
+      end
     end
 
     context '商品購入が出来ないとき' do
@@ -44,6 +49,12 @@ RSpec.describe ProductOrder, type: :model do
         expect(@product_order.errors.full_messages).to include("Delivery prefecture can't be blank")
       end
 
+      it 'delivery_prefectures_idが1では登録出来ない' do
+        @product_order.delivery_prefecture_id = 1
+        @product_order.valid?
+        expect(@product_order.errors.full_messages).to include("Delivery prefecture must be other than 1")
+      end
+
       it 'cityが空だと登録出来ない' do
         @product_order.city = ''
         @product_order.valid?
@@ -66,6 +77,24 @@ RSpec.describe ProductOrder, type: :model do
         @product_order.phone_number = '090428356241'
         @product_order.valid?
         expect(@product_order.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberが英数混合では登録が出来ない' do
+        @product_order.phone_number = '090abcd5624'
+        @product_order.valid?
+        expect(@product_order.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'user_idが空では登録出来ないこと' do
+        @product_order.user_id = ''
+        @product_order.valid?
+        expect(@product_order.errors.full_messages).to include()
+      end
+
+      it 'product_idが空では登録出来ないこと' do
+        @product_order.product_id = ''
+        @product_order.valid?
+        expect(@product_order.errors.full_messages).to include()
       end
     end
   end

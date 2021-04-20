@@ -3,7 +3,7 @@ class ProductOrder
   attr_accessor :token, :postal_code, :delivery_prefecture_id, :city, :address1, :address2, :phone_number, :product_id, :user_id
 
   with_options presence: true do
-    validates :token, :city, :address1
+    validates :token, :city, :address1, :user_id, :product_id
     validates :delivery_prefecture_id, numericality: { other_than: 1 }
     validates :phone_number, format: { with: /\A\d{11}\Z/ }
 
