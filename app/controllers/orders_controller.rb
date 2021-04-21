@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def index
     if current_user.id != @product.user_id && @product.order == nil
-      @product_order = ProductOrder.new(order_params)
+      @product_order = ProductOrder.new
     else
       redirect_to root_path
     end
