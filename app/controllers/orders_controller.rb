@@ -3,7 +3,11 @@ class OrdersController < ApplicationController
   before_action :find_params, only: [:index, :create]
 
   def index
-    @product_order = ProductOrder.new(order_params)
+    if current_user.id != @product.user_id && @product.order == nil
+      @product_order = ProductOrder.new(order_params)
+    else
+      redirect_to root_path
+    end
   end
 
   def create
