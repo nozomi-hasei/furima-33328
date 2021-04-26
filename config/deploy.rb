@@ -1,4 +1,4 @@
-lock "~> 3.1"
+lock "~> 3.16.0"
 
 set :application, "furima-33328"
 set :repo_url, "git@example.com:nozomi-hasei/furima-33328.git"
@@ -10,14 +10,11 @@ set :rbenv_ruby, '2.6.5'
 set :ssh_options, auth_methods: ['publickey'],
                                   keys: ['~/.ssh/nozomi.pem'] 
 
-# プロセス番号を記載したファイルの場所
 set :unicorn_pid, -> { "#{shared_path}/tmp/pids/unicorn.pid" }
 
-# Unicornの設定ファイルの場所
 set :unicorn_config_path, -> { "#{current_path}/config/unicorn.rb" }
 set :keep_releases, 5
 
-# デプロイ処理が終わった後、Unicornを再起動するための記述
 after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
   task :restart do
